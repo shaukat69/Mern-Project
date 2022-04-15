@@ -4,23 +4,16 @@ const express = require('express');
 const app = express();
 
 dotenv.config({ path: './config.env' })
+require('./db/conn');
+// const User = require('./model/userSchema');
 
-const DB = process.env.DATABASE;
+app.use(express.json());
 
-mongoose.connect(DB).then(() => {
-    console.log('Connection Successful');
-}).catch((err) => console.log(err));
+// we link the router files to make our route easy
+app.use(require('./router/auth'));
 
 
-// mongoose.connect(DB, {
-//     useNewUrParser: true,
-//     useCreateIndex: true,
-//     useunifiedTropology: true,
-//     useFindAndModify: false
-// }).then(() => {
-//     console.log('Connection Successful');
-// }).catch((err) => console.log(err));
-
+const PORT = process.env.PORT;
 
 // MiddleWare
 const middleware = (req, res, next) => {
@@ -28,9 +21,9 @@ const middleware = (req, res, next) => {
     next();
 }
 
-app.get('/', (req, res) => {
-    res.send(`Hello World From The Server`);
-});
+// app.get('/', (req, res) => {
+//     res.send(`Hello World From The Server qpp.js`);
+// });
 
 app.get('/about', middleware, (req, res) => {
     console.log(`Hello About`);
@@ -53,6 +46,6 @@ app.get('/signup', (req, res) => {
     res.send(`Hello Registration World From The Server`);
 });
 
-app.listen(3000, () => {
-    console.log('The server is running at port 3000');
+app.listen(PORT, () => {
+    console.log(`The server is running at ${PORT}`);
 })

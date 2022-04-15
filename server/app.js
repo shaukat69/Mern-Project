@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+// This is used to connect the config.env file which hides the database and port information
 dotenv.config({ path: './config.env' })
+
+
+// This is used to conect database connectio file
 require('./db/conn');
 // const User = require('./model/userSchema');
 
+
+// This is used to convert string to json in express
 app.use(express.json());
 
 // we link the router files to make our route easy
